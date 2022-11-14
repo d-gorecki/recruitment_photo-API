@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "photo",
     "rest_framework",
     "API",
+    "django_q",
 ]
 
 MIDDLEWARE = [
@@ -137,3 +138,20 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "photos")
 MEDIA_URL = "photos/"
+
+Q_CLUSTER = {
+    "name": "imageAPI",
+    "workers": 8,
+    "recycle": 500,
+    "timeout": 60,
+    "compress": True,
+    "save_limit": 250,
+    "queue_limit": 500,
+    "cpu_affinity": 1,
+    "label": "Django Q",
+    "redis": {
+        "host": "127.0.0.1",
+        "port": 6379,
+        "db": 0,
+    },
+}

@@ -4,6 +4,7 @@ from photo.functionality import ImportPhoto
 from photo.models import Photo
 from API.serailizers.photo_serializer import PhotoSerializer
 import requests
+from django_q.tasks import async_task
 
 
 class ImportFromExternalAPIListView(APIView):

@@ -44,4 +44,6 @@ class ImportPhoto:
             record.pop("thumbnailUrl")
             serializer: PhotoImportSerializer = PhotoImportSerializer(data=record)
             serializer.is_valid()
+            print(record)
+            print(serializer.errors)
             serializer.save()

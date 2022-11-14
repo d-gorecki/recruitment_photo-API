@@ -2,6 +2,9 @@ from rest_framework import serializers
 from photo.models import Photo
 
 
+# using source= params raises [ErrorDetail(string='This field is required.', code='required')] for some fields
+
+
 class PhotoImportSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     albumId = serializers.IntegerField()
