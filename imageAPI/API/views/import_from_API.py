@@ -15,7 +15,11 @@ class ImportFromExternalAPIListView(APIView):
         response = requests.get(URL)
 
         if response.status_code == 200:
-            ImportPhoto.download_photos_and_populate_db(response.json()[:3])
+            for record in response.json():
+                img_path = ImportPhoto.download_photo(record)
+                ImportPhoto.save_to_db(
+                    ImportPhoto.calculate_record_data(record, img_path)
+                )
             photos = Photo.objects.all()
             serializer = PhotoSerializer(photos, many=True)
             return Response(serializer.data)

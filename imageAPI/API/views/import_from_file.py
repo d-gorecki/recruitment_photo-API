@@ -19,10 +19,14 @@ class ImportFromFileView(APIView):
         try:
             with open(self.FILE_PATH, "r") as f:
                 data = json.load(f)
-                ImportPhoto.download_photos_and_populate_db(data)
-                photos = Photo.objects.all()
-                serializer = PhotoSerializer(photos, many=True)
-                return Response(serializer.data)
+            for record in data:
+                img_path = ImportPhoto.download_photo(record)
+                ImportPhoto.save_to_db(
+                    ImportPhoto.calculate_record_data(record, img_path)
+                )
+            photos = Photo.objects.all()
+            serializer = PhotoSerializer(photos, many=True)
+            return Response(serializer.data)
 
         except (FileNotFoundError, IOError):
             return Response({"error": "file does not exist"})

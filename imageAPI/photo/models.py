@@ -10,3 +10,4 @@ class Photo(models.Model):
         max_length=7, help_text="photo dominant color in hex format", null=True
     )
     URL = models.ImageField(upload_to="", null=True)
+    external_URL = models.URLField(null=True)

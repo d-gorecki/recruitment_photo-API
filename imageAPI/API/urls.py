@@ -9,7 +9,9 @@ router = DefaultRouter()
 router.register(r"photos", viewset=PhotosViewSet, basename="photos")
 
 urlpatterns = [
-    path("import_from_API/", ImportFromExternalAPIListView.as_view()),
-    path("import_from_file/", ImportFromFileView.as_view()),
+    path(
+        "import_from_API/", ImportFromExternalAPIListView.as_view(), name="import-api"
+    ),
+    path("import_from_file/", ImportFromFileView.as_view(), name="import-file"),
     path("", include(router.urls)),
 ]

@@ -14,5 +14,6 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         with open(self.FILE_PATH) as f:
             data = json.load(f)
-
-            ImportPhoto.download_photos_and_populate_db(data)
+        for record in data:
+            img_path = ImportPhoto.download_photo(record)
+            ImportPhoto.save_to_db(ImportPhoto.calculate_record_data(record, img_path))
