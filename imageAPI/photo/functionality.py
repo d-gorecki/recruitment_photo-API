@@ -2,7 +2,7 @@ from PIL import Image
 import os
 from django.conf import settings
 import requests
-from API.serializers import PhotoImportSerializer
+from API.serailizers.photo_import_serializer import PhotoImportSerializer
 
 
 class DominantColor:
@@ -20,8 +20,6 @@ class DominantColor:
 
 class ImportPhoto:
     """ImportPhotos class containing static method download_photos_and_populate_db"""
-
-    FILE_PATH: str = os.path.join(settings.BASE_DIR, "import_file/data.json")
 
     @staticmethod
     def download_photos_and_populate_db(data: list[dict]) -> None:
@@ -42,7 +40,7 @@ class ImportPhoto:
                 record["width"] = im.width
                 record["height"] = im.height
 
-            record["url"] = f"http://localhost:8000{settings.MEDIA_URL}{record_id}.png/"
+            record["url"] = f"http://localhost:8000{settings.MEDIA_URL}{record_id}.png"
             record.pop("thumbnailUrl")
             serializer: PhotoImportSerializer = PhotoImportSerializer(data=record)
             serializer.is_valid()
