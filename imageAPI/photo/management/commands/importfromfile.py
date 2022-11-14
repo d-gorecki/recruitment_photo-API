@@ -6,7 +6,8 @@ from photo.functionality import ImportPhoto
 
 
 class Command(BaseCommand):
-    """"""
+    """Django command importing data from .json file through DRF serializer into database
+    Import file location must be BASE_DIR/import_file/data.json"""
 
     FILE_PATH = os.path.join(settings.BASE_DIR, "import_file/data.json")
 
