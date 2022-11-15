@@ -1,9 +1,8 @@
-from django.urls import path, include
-from rest_framework.routers import DefaultRouter
-
 from API.views.import_from_API import ImportFromExternalAPIListView
 from API.views.import_from_file import ImportFromFileView
 from API.views.photos import PhotosViewSet
+from django.urls import include, path
+from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
 router.register(r"photos", viewset=PhotosViewSet, basename="photos")

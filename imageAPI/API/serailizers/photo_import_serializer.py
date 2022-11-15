@@ -1,6 +1,5 @@
-from rest_framework import serializers
 from photo.models import Photo
-
+from rest_framework import serializers
 
 # using source= params raises [ErrorDetail(string='This field is required.', code='required')] for some fields
 

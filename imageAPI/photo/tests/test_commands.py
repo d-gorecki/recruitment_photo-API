@@ -1,8 +1,9 @@
-from django.test import TestCase
-from django.core.management import call_command
-from unittest.mock import patch
-from django.conf import settings
 import os
+from unittest.mock import patch
+
+from django.conf import settings
+from django.core.management import call_command
+from django.test import TestCase
 from photo.models import Photo
 
 

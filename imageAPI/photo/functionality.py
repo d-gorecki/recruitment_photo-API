@@ -1,9 +1,9 @@
 from typing import Any
 
-from PIL import Image
-from django.conf import settings
 import requests
 from API.serailizers.photo_import_serializer import PhotoImportSerializer
+from django.conf import settings
+from PIL import Image
 
 
 class DominantColor:

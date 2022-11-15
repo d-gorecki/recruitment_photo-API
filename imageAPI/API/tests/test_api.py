@@ -1,9 +1,9 @@
 from django.contrib.auth.models import User
-from rest_framework.test import APITestCase
-from rest_framework import status
 from django.shortcuts import reverse
-from photo.models import Photo
 from factories.input_factory import InputFactory
+from photo.models import Photo
+from rest_framework import status
+from rest_framework.test import APITestCase
 
 
 class TestAPI(APITestCase):

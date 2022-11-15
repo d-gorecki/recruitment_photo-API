@@ -1,8 +1,8 @@
-from typing import Optional, Any
+from typing import Any, Optional
 
-from rest_framework import serializers
-from photo.models import Photo
 from photo.functionality import ImportPhoto
+from photo.models import Photo
+from rest_framework import serializers
 
 
 class PhotoCreateUpdateSerializer(serializers.ModelSerializer):
