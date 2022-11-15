@@ -1,17 +1,17 @@
+from django.db.models import QuerySet
 from rest_framework import viewsets
 from photo.models import Photo
 from API.serailizers.photo_serializer import PhotoSerializer
 from API.serailizers.photo_create_update_serializer import PhotoCreateUpdateSerializer
 from rest_framework import permissions
-from rest_framework import mixins
-from rest_framework import generics
+from rest_framework import serializers
 
 
 class PhotosViewSet(viewsets.ModelViewSet):
-    queryset = Photo.objects.all()
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-    serializer_class = PhotoSerializer
-    serializer_action_classes = {
+    queryset: QuerySet[Photo] = Photo.objects.all()
+    permission_classes: list[permissions] = [permissions.IsAuthenticatedOrReadOnly]
+    serializer_class: PhotoSerializer = PhotoSerializer
+    serializer_action_classes: dict[str, serializers.ModelSerializer] = {
         "create": PhotoCreateUpdateSerializer,
         "update": PhotoCreateUpdateSerializer,
     }

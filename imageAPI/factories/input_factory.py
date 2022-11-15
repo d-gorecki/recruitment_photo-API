@@ -6,9 +6,9 @@ class InputFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Photo
 
-    album_id = 1
-    title = "Example Title"
-    width = 100
-    height = 100
-    dominant_color = "#000000"
-    URL = "http://localhost:8000/photos/1.png"
+    album_id: int = 1
+    title: str = "Example Title"
+    width: int = 100
+    height: int = 100
+    dominant_color: str = "#000000"
+    URL: str = "http://localhost:8000/photos/1.png"

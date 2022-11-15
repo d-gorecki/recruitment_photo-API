@@ -1,3 +1,6 @@
+from typing import Any
+
+from django.db.models import QuerySet
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from photo.functionality import ImportPhoto
@@ -18,14 +21,14 @@ class ImportFromFileView(APIView):
 
         try:
             with open(self.FILE_PATH, "r") as f:
-                data = json.load(f)
+                data: Any = json.load(f)
             for record in data:
-                img_path = ImportPhoto.download_photo(record)
+                img_path: str = ImportPhoto.download_photo(record)
                 ImportPhoto.save_to_db(
                     ImportPhoto.calculate_record_data(record, img_path)
                 )
-            photos = Photo.objects.all()
-            serializer = PhotoSerializer(photos, many=True)
+            photos: QuerySet[Photo] = Photo.objects.all()
+            serializer: PhotoSerializer = PhotoSerializer(photos, many=True)
             return Response(serializer.data)
 
         except (FileNotFoundError, IOError):

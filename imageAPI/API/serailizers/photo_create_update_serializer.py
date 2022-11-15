@@ -1,3 +1,5 @@
+from typing import Optional, Any
+
 from rest_framework import serializers
 from photo.models import Photo
 from photo.functionality import ImportPhoto
@@ -11,10 +13,19 @@ class PhotoCreateUpdateSerializer(serializers.ModelSerializer):
         fields = ["album_id", "title", "URL"]
 
     def create(self, validated_data):
-        curr_id = int(Photo.objects.last().id) + 1
-        validated_data["id"] = curr_id
-        img_path = ImportPhoto.download_photo(validated_data)
-        record = ImportPhoto.calculate_record_data(validated_data, img_path)
+        curr_id: Optional[int] = Photo.objects.last().id
+        # as photo path is based on record id and photo is being downloaded before creating new record
+        # id has to be initialized manually
+        if not curr_id:
+            curr_id = 1
+        else:
+            curr_id += 1
+
+        validated_data["id"]: int = curr_id
+        img_path: str = ImportPhoto.download_photo(validated_data)
+        record: dict[str, Any] = ImportPhoto.calculate_record_data(
+            validated_data, img_path
+        )
         return Photo.objects.create(
             id=record.get("id"),
             album_id=record.get("album_id"),
@@ -26,16 +37,17 @@ class PhotoCreateUpdateSerializer(serializers.ModelSerializer):
         )
 
     def update(self, instance, validated_data):
-        print(validated_data)
-        validated_data["id"] = instance.id
-        img_path = ImportPhoto.download_photo(validated_data)
-        record = ImportPhoto.calculate_record_data(validated_data, img_path)
-        instance.album_id = validated_data.get("album_id")
-        instance.title = validated_data.get("title")
-        instance.URL = record.get("url")
-        instance.width = record.get("width")
-        instance.height = record.get("height")
-        instance.domaint_color = record.get("dominant_color")
+        validated_data["id"]: int = instance.id
+        img_path: str = ImportPhoto.download_photo(validated_data)
+        record: dict[str, Any] = ImportPhoto.calculate_record_data(
+            validated_data, img_path
+        )
+        instance.album_id: int = validated_data.get("album_id")
+        instance.title: str = validated_data.get("title")
+        instance.URL: str = record.get("url")
+        instance.width: int = record.get("width")
+        instance.height: int = record.get("height")
+        instance.dominant_color: str = record.get("dominant_color")
         instance.save()
 
         return instance
