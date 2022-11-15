@@ -10,12 +10,13 @@ from django_q.tasks import async_task
 class ImportFromExternalAPIListView(APIView):
     """Internal API endpoint triggers import of data through external API"""
 
-    def get(self, request):
-        URL = "https://jsonplaceholder.typicode.com/photos"
-        response = requests.get(URL)
+    URL = "https://jsonplaceholder.typicode.com/photos"
+    response = requests.get(URL)
 
-        if response.status_code == 200:
-            for record in response.json():
+    def get(self, request):
+
+        if self.response.status_code == 200:
+            for record in self.response.json():
                 img_path = ImportPhoto.download_photo(record)
                 ImportPhoto.save_to_db(
                     ImportPhoto.calculate_record_data(record, img_path)
@@ -25,4 +26,4 @@ class ImportFromExternalAPIListView(APIView):
             return Response(serializer.data)
 
         else:
-            return Response(response.status_code)
+            return Response(self.response.status_code)
