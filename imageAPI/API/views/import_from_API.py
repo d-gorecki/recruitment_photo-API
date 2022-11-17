@@ -3,6 +3,7 @@ from API.serailizers.photo_serializer import PhotoSerializer
 from django.db.models import QuerySet
 from photo.functionality import ImportPhoto
 from photo.models import Photo
+from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -15,7 +16,7 @@ class ImportFromExternalAPIListView(APIView):
 
     def get(self, request):
 
-        if self.response.status_code == 200:
+        if self.response.status_code == status.HTTP_200_OK:
             for record in self.response.json():
                 img_path: str = ImportPhoto.download_photo(record)
                 ImportPhoto.save_to_db(
