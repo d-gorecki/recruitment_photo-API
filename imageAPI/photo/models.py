@@ -12,3 +12,4 @@ class Photo(models.Model):
     URL = models.ImageField(
         upload_to="", null=True, help_text="URL to locally stored file"
     )
+    external_URL = models.URLField(null=True, help_text="external URL")

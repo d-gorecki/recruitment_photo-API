@@ -12,3 +12,4 @@ class InputFactory(factory.django.DjangoModelFactory):
     height: int = 100
     dominant_color: str = "#000000"
     URL: str = "http://localhost:8000/photos/1.png"
+    external_URL: str = "https://via.placeholder.com/150/92"

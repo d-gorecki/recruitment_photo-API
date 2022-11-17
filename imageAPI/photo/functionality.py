@@ -1,7 +1,6 @@
 from typing import Any
 
 import requests
-from API.serailizers.photo_import_serializer import PhotoImportSerializer
 from django.conf import settings
 from PIL import Image
 
@@ -23,7 +22,7 @@ class ImportPhoto:
     """ImportPhotos class containing static method download_photos_and_populate_db"""
 
     @staticmethod
-    def download_photo(record: dict[str, Any]) -> str:
+    def _download_photo(record: dict[str, Any]) -> str:
         """Download photo from passed URL and save it locally as MEDIA_ROOT/id.png"""
         if record.get("url"):
             url: str = record.get("url") + ".png"
@@ -40,25 +39,27 @@ class ImportPhoto:
         return img_path
 
     @staticmethod
-    def calculate_record_data(record: dict, img_path: str) -> dict[str, Any]:
+    def download_photo(photo_id: int, external_url: str) -> str:
+        """Download photo from passed"""
+        external_url += ".png"
+        img_path: str = f"{settings.MEDIA_ROOT}/{photo_id}.png"
+        print(img_path)
+        img: bytes = requests.get(external_url).content
+        with open(img_path, "wb") as f:
+            f.write(img)
+
+        return img_path
+
+    @staticmethod
+    def calculate_record_data(img_path: str, photo_id: int) -> dict[str, Any]:
         """Calculate and return dict with Image parameters (dominant_color, width, height, local URL)"""
-        record_id: int = record.get("id")
+        record = dict()
 
         with Image.open(img_path) as im:
             record["dominant_color"]: str = DominantColor.get_dominant_color(im)
             record["width"]: int = im.width
             record["height"]: int = im.height
 
-        record["url"]: str = f"http://localhost:8000{settings.MEDIA_URL}{record_id}.png"
-
-        if record.get("thumbnailUrl"):
-            record.pop("thumbnailUrl")
+        record["URL"]: str = f"http://localhost:8000{settings.MEDIA_URL}{photo_id}.png"
 
         return record
-
-    @staticmethod
-    def save_to_db(record: dict[str, Any]) -> None:
-        """Deserialize object basing on passed dict"""
-        serializer: PhotoImportSerializer = PhotoImportSerializer(data=record)
-        serializer.is_valid()
-        serializer.save()

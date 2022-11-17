@@ -2,9 +2,9 @@ import json
 import os
 from typing import Any
 
+from API.serailizers.photo_import_serializer import PhotoImportSerializer
 from django.conf import settings
 from django.core.management.base import BaseCommand
-from photo.functionality import ImportPhoto
 
 
 class Command(BaseCommand):
@@ -17,5 +17,6 @@ class Command(BaseCommand):
         with open(self.FILE_PATH) as f:
             data: Any = json.load(f)
         for record in data:
-            img_path: str = ImportPhoto.download_photo(record)
-            ImportPhoto.save_to_db(ImportPhoto.calculate_record_data(record, img_path))
+            serializer = PhotoImportSerializer(data=record)
+            serializer.is_valid()
+            serializer.save()
