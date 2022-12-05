@@ -48,7 +48,6 @@ INSTALLED_APPS = [
     "photo",
     "rest_framework",
     "API",
-    "django_q",
     "django_extensions",
 ]
 
