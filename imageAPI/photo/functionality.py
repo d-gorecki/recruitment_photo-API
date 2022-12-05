@@ -22,28 +22,10 @@ class ImportPhoto:
     """ImportPhotos class containing static method download_photos_and_populate_db"""
 
     @staticmethod
-    def _download_photo(record: dict[str, Any]) -> str:
-        """Download photo from passed URL and save it locally as MEDIA_ROOT/id.png"""
-        if record.get("url"):
-            url: str = record.get("url") + ".png"
-        else:
-            url: str = record.get("URL") + ".png"
-        record_id: int = record.get("id")
-
-        img_path: str = f"{settings.MEDIA_ROOT}/{record_id}.png"
-        img: bytes = requests.get(url).content
-
-        with open(img_path, "wb") as f:
-            f.write(img)
-
-        return img_path
-
-    @staticmethod
     def download_photo(photo_id: int, external_url: str) -> str:
-        """Download photo from passed"""
+        """Download photo from passed URL"""
         external_url += ".png"
         img_path: str = f"{settings.MEDIA_ROOT}/{photo_id}.png"
-        print(img_path)
         img: bytes = requests.get(external_url).content
         with open(img_path, "wb") as f:
             f.write(img)
@@ -59,7 +41,6 @@ class ImportPhoto:
             record["dominant_color"]: str = DominantColor.get_dominant_color(im)
             record["width"]: int = im.width
             record["height"]: int = im.height
-
-        record["URL"]: str = f"http://localhost:8000{settings.MEDIA_URL}{photo_id}.png"
+            record["URL"]: str = f"file:/{img_path}"
 
         return record
