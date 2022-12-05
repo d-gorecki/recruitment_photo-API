@@ -41,6 +41,6 @@ class ImportPhoto:
             record["dominant_color"]: str = DominantColor.get_dominant_color(im)
             record["width"]: int = im.width
             record["height"]: int = im.height
-            record["URL"]: str = f"file:/{img_path}"
+            record["URL"]: str = f"file://{img_path}"
 
         return record

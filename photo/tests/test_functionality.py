@@ -10,14 +10,13 @@ from photo.functionality import DominantColor, ImportPhoto
 
 class TestFunctionality(TestCase):
     def setUp(self) -> None:
-        self.img_path = os.path.join(
-            settings.BASE_DIR, "photo/tests/files/black_100x100.png"
-        )
+        relative_path = "photo/tests/files/black_100x100.png"
+        self.img_path = os.path.join(settings.BASE_DIR, relative_path)
         self.data = {
             "dominant_color": "#000000",
             "width": 100,
             "height": 100,
-            "URL": "http://localhost:8000/photos/1.png",
+            "URL": f"file://{self.img_path}",
         }
 
     def test_get_dominant_color(self):
