@@ -14,6 +14,7 @@ import os
 from pathlib import Path
 
 import environ
+from django.core.management.utils import get_random_secret_key
 
 env = environ.Env(DEBUG=(bool, False))
 
@@ -26,7 +27,7 @@ environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env("SECRET_KEY")
+SECRET_KEY = get_random_secret_key()
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -140,20 +141,3 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "photos")
 MEDIA_URL = "photos/"
-
-Q_CLUSTER = {
-    "name": "imageAPI",
-    "workers": 8,
-    "recycle": 500,
-    "timeout": 60,
-    "compress": True,
-    "save_limit": 250,
-    "queue_limit": 500,
-    "cpu_affinity": 1,
-    "label": "Django Q",
-    "redis": {
-        "host": "127.0.0.1",
-        "port": 6379,
-        "db": 0,
-    },
-}
