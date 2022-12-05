@@ -6,4 +6,4 @@ class PhotoConfig(AppConfig):
     name = "photo"
 
     def ready(self):
-        import photo.signals
+        from .signals import update_photo
