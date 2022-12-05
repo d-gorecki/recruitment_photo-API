@@ -7,10 +7,11 @@ from django.contrib.auth.models import User
 from django.db.models import signals
 from django.shortcuts import reverse
 from django.test import override_settings
-from photo.factories.input_factory import InputFactory
-from photo.models import Photo
 from rest_framework import status
 from rest_framework.test import APITestCase
+
+from photo.factories.input_factory import InputFactory
+from photo.models import Photo
 
 TEST_DIR = "test_data"
 

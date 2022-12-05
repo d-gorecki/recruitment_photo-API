@@ -2,6 +2,7 @@ from typing import Any
 
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+
 from photo.functionality import ImportPhoto
 from photo.models import Photo
 

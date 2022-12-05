@@ -3,8 +3,9 @@ from unittest.mock import patch
 
 from django.conf import settings
 from django.test import TestCase
-from photo.functionality import DominantColor, ImportPhoto
 from PIL import Image
+
+from photo.functionality import DominantColor, ImportPhoto
 
 
 class TestFunctionality(TestCase):

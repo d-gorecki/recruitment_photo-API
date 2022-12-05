@@ -1,5 +1,6 @@
-from photo.models import Photo
 from rest_framework import serializers
+
+from photo.models import Photo
 
 
 class PhotoCreateUpdateSerializer(serializers.ModelSerializer):

@@ -2,9 +2,10 @@ import json
 import os
 from typing import Any
 
-from API.serailizers.photo_import_serializer import PhotoImportSerializer
 from django.conf import settings
 from django.core.management.base import BaseCommand
+
+from API.serailizers.photo_import_serializer import PhotoImportSerializer
 
 
 class Command(BaseCommand):

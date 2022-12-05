@@ -5,6 +5,7 @@ from unittest.mock import patch
 from django.conf import settings
 from django.core.management import call_command
 from django.test import TestCase, override_settings
+
 from photo.models import Photo
 
 TEST_DIR = "test_data"

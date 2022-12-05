@@ -1,4 +1,5 @@
 import factory
+
 from photo.models import Photo
 
 
